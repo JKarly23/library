@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { BooksModule } from './books/books.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 @Module({
   controllers: [],
   providers: [],
@@ -21,6 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
     }),
     BooksModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
