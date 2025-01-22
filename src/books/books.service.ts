@@ -24,6 +24,7 @@ export class BooksService {
 
   async create(createBookDto: CreateBookDto) {
     const { categoria, ...rest } = createBookDto;
+    this.logger.debug(categoria)
     try {
       const category = await this.categoriesRepository.findOne({
         where: { nombre: categoria },
@@ -60,6 +61,7 @@ export class BooksService {
       );
     }
     if (!books) throw new NotFoundException('Books not found');
+    books = books.sort((a, b) => a.titulo.localeCompare(b.titulo));
     return books.map(({ categoria, ...book }) => ({
       ...book,
       categoria: categoria.nombre,
@@ -103,6 +105,11 @@ export class BooksService {
     const libro = await this.findOne(term);
     this.booksRepository.delete(libro.id);
     return;
+  }
+
+  async getAllCategories() {
+    const categories = await this.categoriesRepository.find();
+    return categories.sort((a,b) => a.nombre.localeCompare(b.nombre))
   }
 
   handleDBException(error: any) {

@@ -66,4 +66,8 @@ export class BooksController {
   remove(@Param('term') term: string) {
     return this.booksService.remove(term);
   }
+  @Get('get/categories')
+  getAllCategories(){
+    return this.booksService.getAllCategories()
+  }
 }
